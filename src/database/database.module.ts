@@ -15,6 +15,7 @@ import { Users } from 'src/entities/user. entity';
       database: process.env.DB_DATABASE,
       entities: [Users, Cart],
       synchronize: false,
+      // logging: true,
     }),
   ],
 })
