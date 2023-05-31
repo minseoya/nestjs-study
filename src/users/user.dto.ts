@@ -22,3 +22,13 @@ export class CreateUserDto {
   @IsString()
   readonly phoneNumber: string;
 }
+
+export class userLoginDto {
+  @ApiProperty({ description: 'user name', example: 'minseo' })
+  @IsString()
+  readonly username: string;
+
+  @ApiProperty({ description: 'password', example: '23231@!f' })
+  @IsString()
+  readonly passwords: string;
+}

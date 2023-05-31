@@ -11,7 +11,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './user.dto';
+import { CreateUserDto, userLoginDto } from './user.dto';
 import { Users } from 'src/entities/user. entity';
 import {
   ApiCreatedResponse,
@@ -43,5 +43,10 @@ export class UsersController {
   })
   findUserInfo(@Param('userid') userId: number): Promise<Users> {
     return this.usersService.findUserInfo(userId);
+  }
+
+  @Post('login')
+  async login(@Body() userLoginDto: userLoginDto) {
+    return this.usersService.login(userLoginDto);
   }
 }
