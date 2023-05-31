@@ -56,7 +56,6 @@ export class UsersService {
     );
     if (!vaildateResult)
       throw new UnauthorizedException('비밀번호가 잘못되었습니다.');
-
     return this.authService.login({ id: user.id, username: username });
   }
 }

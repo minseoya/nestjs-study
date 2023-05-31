@@ -4,8 +4,6 @@ import authConfig from 'src/config/authConfig';
 import { UserType } from 'src/tpye/user.tpye';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
-import { CreateUserDto } from 'src/users/user.dto';
-import { Users } from 'src/entities/user. entity';
 
 @Injectable()
 export class AuthService {
