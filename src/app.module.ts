@@ -7,24 +7,28 @@ import { CartsModule } from './carts/carts.module';
 import { ConfigModule } from '@nestjs/config';
 import authConfig from './config/authConfig';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Cart } from './entities/cart.entity';
+import { Product } from './entities/product.entity';
+import { Users } from './entities/user. entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: process.env.DB_HOST,
-      port: +process.env.DB_PORT,
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [__dirname + 'entities/**/*.entity.ts'],
+      // username: 'root',
+      // password: '000618',
+      // database: 'unicon',
+      entities: [Cart, Product, Users],
       synchronize: false,
       // logging: true,
     }),
     UsersModule,
     CartsModule,
     ConfigModule.forRoot({
-      envFilePath: [`${__dirname}/config/env/.${process.env.NODE_ENV}.env`],
+      envFilePath: [`${__dirname}/config/.${process.env.NODE_ENV}.env`],
       load: [authConfig],
       isGlobal: true,
     }),
