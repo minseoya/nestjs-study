@@ -1,8 +1,8 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { CartsService } from './carts.service';
-import { CreateCartDto } from './create-cart.dto';
 import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Cart } from 'src/entities/cart.entity';
+import { Cart } from './entities/cart.entity';
+import { CreateCartDto } from './dto/create-cart.dto';
 
 @ApiTags('cart API')
 @Controller('carts')

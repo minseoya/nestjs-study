@@ -7,9 +7,9 @@ import { CartsModule } from './carts/carts.module';
 import { ConfigModule } from '@nestjs/config';
 import authConfig from './config/authConfig';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Cart } from './entities/cart.entity';
+import { Cart } from '../src/carts/entities/cart.entity';
 import { Product } from './entities/product.entity';
-import { Users } from './entities/user. entity';
+import { Users } from '../src/users/entities/user. entity';
 
 @Module({
   imports: [

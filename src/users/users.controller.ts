@@ -11,6 +11,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
+<<<<<<< HEAD
 import { CreateUserDto, userLoginDto } from './user.dto';
 import { Users } from 'src/entities/user. entity';
 import {
@@ -19,6 +20,10 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
+=======
+import { CreateUserDto } from './dto/create-user.dto';
+import { Users } from 'src/users/entities/user. entity';
+>>>>>>> main
 
 @ApiTags('유저의 API')
 @Controller('users')
