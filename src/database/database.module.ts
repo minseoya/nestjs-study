@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import 'dotenv/config';
-import { Cart } from 'src/entities/cart.entity';
-import { Users } from 'src/entities/user. entity';
+import { Cart } from 'src/carts/entities/cart.entity';
+import { Users } from 'src/users/entities/user. entity';
 
 @Module({
   imports: [
