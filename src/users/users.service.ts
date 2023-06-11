@@ -2,13 +2,9 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from 'src/users/entities/user. entity';
 import { Repository } from 'typeorm';
-<<<<<<< HEAD
-import { CreateUserDto, userLoginDto } from './user.dto';
+import { userLoginDto } from './user.dto';
 import { AuthService } from 'src/auth/auth.service';
-=======
 import { CreateUserDto } from './dto/create-user.dto';
-import * as bcrypt from 'bcrypt';
->>>>>>> main
 
 @Injectable()
 export class UsersService {
@@ -45,12 +41,13 @@ export class UsersService {
   async remove(id: number): Promise<void> {
     await this.usersRepository.delete(id);
   }
-  async login(userLoginDto: userLoginDto) {
-    const { username, passwords } = userLoginDto;
+
+  async login(userLoginDto: userLoginDto): Promise<{ accessToken: string }> {
+    const { email, passwords } = userLoginDto;
 
     const user = await this.usersRepository.findOne({
       where: {
-        names: username,
+        email,
       },
     });
     if (!user) throw new UnauthorizedException('해당아이디 없음');
@@ -62,6 +59,6 @@ export class UsersService {
     if (!vaildateResult)
       throw new UnauthorizedException('비밀번호가 잘못되었습니다.');
 
-    return this.authService.login({ id: user.id, username: username });
+    return this.authService.login({ id: user.id, email });
   }
 }

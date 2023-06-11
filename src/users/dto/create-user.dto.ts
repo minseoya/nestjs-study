@@ -14,5 +14,5 @@ export class CreateUserDto {
   passwords: string;
 
   @IsString()
-  readonly phone_number: string;
+  readonly phoneNumber: string;
 }

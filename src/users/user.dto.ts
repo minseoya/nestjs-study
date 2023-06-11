@@ -24,9 +24,9 @@ export class CreateUserDto {
 }
 
 export class userLoginDto {
-  @ApiProperty({ description: 'user name', example: 'minseo' })
+  @ApiProperty({ description: 'user email', example: 'minseo@gmail.com' })
   @IsString()
-  readonly username: string;
+  readonly email: string;
 
   @ApiProperty({ description: 'password', example: '23231@!f' })
   @IsString()

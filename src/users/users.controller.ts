@@ -3,27 +3,24 @@ import {
   ClassSerializerInterceptor,
   Controller,
   Get,
-  HttpStatus,
   Param,
   Post,
   Req,
-  Res,
+  UseGuards,
   UseInterceptors,
+  ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-<<<<<<< HEAD
-import { CreateUserDto, userLoginDto } from './user.dto';
-import { Users } from 'src/entities/user. entity';
+import { userLoginDto } from './user.dto';
 import {
   ApiCreatedResponse,
   ApiOperation,
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-=======
 import { CreateUserDto } from './dto/create-user.dto';
 import { Users } from 'src/users/entities/user. entity';
->>>>>>> main
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @ApiTags('유저의 API')
 @Controller('users')
@@ -51,7 +48,14 @@ export class UsersController {
   }
 
   @Post('login')
-  async login(@Body() userLoginDto: userLoginDto) {
+  async login(
+    @Body(ValidationPipe) userLoginDto: userLoginDto,
+  ): Promise<{ accessToken: string }> {
     return this.usersService.login(userLoginDto);
+  }
+  @Post('test')
+  @UseGuards(AuthGuard)
+  test(@Req() req) {
+    console.log('req', req);
   }
 }

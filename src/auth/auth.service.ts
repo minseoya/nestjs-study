@@ -4,17 +4,15 @@ import authConfig from 'src/config/authConfig';
 import { UserType } from 'src/tpye/user.tpye';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    @Inject(authConfig.KEY)
-    private config: ConfigType<typeof authConfig>,
-  ) {}
+  constructor(private jwtService: JwtService) {}
   async login(user: UserType) {
     const payload = user;
-    const accessToken = jwt.sign(payload, this.config.jwtSecret); //secretOrPrivateKey
-    return { accessToken, id: user.id };
+    const accessToken = this.jwtService.sign(payload);
+    return { accessToken };
   }
 
   async vaildatePassword(passwords: string, hashedPassword: string) {
@@ -29,17 +27,17 @@ export class AuthService {
 
   verify(jwtString: string) {
     try {
-      const payload = jwt.verify(jwtString, this.config.jwtSecret) as (
+      const payload = this.jwtService.verify(jwtString) as (
         | jwt.JwtPayload
         | string
       ) &
         UserType;
 
-      const { id, username } = payload;
+      const { id, email } = payload;
 
       return {
         id,
-        username,
+        email,
       };
     } catch (e) {
       throw new UnauthorizedException();

@@ -6,8 +6,8 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Users } from './user. entity';
-import { Product } from './product.entity';
+import { Users } from '../../users/entities/user. entity';
+import { Product } from '../../entities/product.entity';
 
 @Entity('cart')
 export class Cart {
