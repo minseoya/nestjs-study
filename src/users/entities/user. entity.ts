@@ -1,8 +1,15 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Cart } from '../../carts/entities/cart.entity';
 
-@Entity()
+@Entity('users')
 export class Users {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
@@ -14,6 +21,10 @@ export class Users {
   @Column()
   passwords: string;
 
-  @Column()
-  phone_number: string;
+  @Column({ name: 'phone_number' })
+  phoneNumber: string;
+
+  @OneToMany(() => Cart, (cart) => cart.user)
+  @JoinTable()
+  cart: Cart;
 }

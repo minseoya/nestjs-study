@@ -2,7 +2,7 @@ import { IsNumber } from 'class-validator';
 
 export class CreateCartDto {
   @IsNumber()
-  readonly user_id: number;
+  readonly userId: number;
 
   @IsNumber()
   readonly productItems: number;
