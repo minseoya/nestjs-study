@@ -12,6 +12,14 @@ export class CartsService {
   ) {}
 
   async createCart(cart: CreateCartDto) {
-    return this.cartRepository.save(cart);
+    return await this.cartRepository.save(cart);
+  }
+
+  async updateCart(cart: CreateCartDto) {
+    const product = await this.cartRepository.findOne({
+      where: { product_items: { id: cart.productItems } },
+    });
+    product.quantity = cart.quantity;
+    return await this.cartRepository.save(product);
   }
 }
