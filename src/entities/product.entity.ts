@@ -2,6 +2,7 @@ import {
   Column,
   Entity,
   JoinTable,
+  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -21,7 +22,7 @@ export class Product {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created_at: Date;
 
-  @OneToMany(() => Cart, (cart) => cart.product_items)
+  @ManyToMany(() => Cart, (cart) => cart.productItem)
   @JoinTable()
-  cart: Cart;
+  cart?: Cart[];
 }

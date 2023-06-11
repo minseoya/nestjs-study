@@ -4,6 +4,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -16,15 +17,13 @@ export class Cart {
   id: number;
 
   @Column()
-  user_id: number;
-
-  @Column()
   quantity: number;
 
-  @OneToMany(() => Product, (product) => product.cart)
-  product_items: Product;
+  @ManyToMany(() => Product, (product) => product.cart)
+  @JoinColumn({ name: 'product_items' }) // 여기에서 이름을 변경
+  productItem?: Product[]; // 이름을 변경한 속성
 
   @ManyToOne(() => Users, (user) => user.cart)
   @JoinColumn({ name: 'user_id' })
-  user: Users;
+  userId: Users;
 }
