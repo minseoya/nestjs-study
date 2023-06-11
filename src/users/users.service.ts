@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from 'src/users/entities/user. entity';
 import { Repository } from 'typeorm';
-import { userLoginDto } from './user.dto';
+import { userLoginDto } from './dto/user.dto';
 import { AuthService } from 'src/auth/auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
 
@@ -15,16 +15,11 @@ export class UsersService {
   ) {}
 
   async createOne(userDto: CreateUserDto) {
-    const { names, email, passwords, phoneNumber } = userDto;
+    userDto.passwords = await this.authService.transformPassword(
+      userDto.passwords,
+    );
 
-    const user = new Users();
-    user.email = email;
-    user.names = names;
-    user.phoneNumber = phoneNumber;
-
-    user.passwords = await this.authService.transformPassword(passwords);
-
-    return this.usersRepository.insert(user);
+    return this.usersRepository.insert(userDto);
   }
 
   async findUserInfo(id: number): Promise<Users> {
@@ -59,6 +54,6 @@ export class UsersService {
     if (!vaildateResult)
       throw new UnauthorizedException('비밀번호가 잘못되었습니다.');
 
-    return this.authService.login({ id: user.id, email });
+    return this.authService.login({ id: user.id, names: user.names });
   }
 }

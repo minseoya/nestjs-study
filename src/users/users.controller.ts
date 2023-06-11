@@ -11,7 +11,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { userLoginDto } from './user.dto';
+import { userLoginDto } from './dto/user.dto';
 import {
   ApiCreatedResponse,
   ApiOperation,
@@ -53,9 +53,10 @@ export class UsersController {
   ): Promise<{ accessToken: string }> {
     return this.usersService.login(userLoginDto);
   }
-  @Post('test')
+
   @UseGuards(AuthGuard)
+  @Post('test')
   test(@Req() req) {
-    console.log('req', req);
+    console.log('req', req.user);
   }
 }
