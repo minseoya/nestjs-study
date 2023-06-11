@@ -11,4 +11,9 @@ export class CartsController {
   cart(@Body() cart: CreateCartDto) {
     return this.cartsService.createCart(cart);
   }
+
+  @Post('update')
+  async updatecart(@Body() cart: CreateCartDto) {
+    return await this.cartsService.updateCart(cart);
+  }
 }

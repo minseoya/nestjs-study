@@ -5,7 +5,7 @@ export class CreateCartDto {
   readonly user_id: number;
 
   @IsNumber()
-  readonly product_items: number;
+  readonly productItems: number;
 
   @IsNumber()
   readonly quantity: number;

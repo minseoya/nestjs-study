@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Product } from 'src/entities/product.entity';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class Cart {
@@ -8,8 +9,8 @@ export class Cart {
   @Column()
   user_id: number;
 
-  @Column()
-  product_items: number;
+  @OneToMany(() => Product, (product) => product.cart)
+  product_items: Product;
 
   @Column()
   quantity: number;
