@@ -19,9 +19,9 @@ export class Cart {
   @Column()
   quantity: number;
 
-  @ManyToMany(() => Product, (product) => product.cart)
+  @ManyToOne(() => Product, (product) => product.cart)
   @JoinColumn({ name: 'product_items' }) // 여기에서 이름을 변경
-  productItem?: Product[]; // 이름을 변경한 속성
+  productItem?: Product; // 이름을 변경한 속성
 
   @ManyToOne(() => Users, (user) => user.cart)
   @JoinColumn({ name: 'user_id' })

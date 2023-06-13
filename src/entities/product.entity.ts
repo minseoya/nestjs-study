@@ -22,7 +22,6 @@ export class Product {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created_at: Date;
 
-  @ManyToMany(() => Cart, (cart) => cart.productItem)
-  @JoinTable()
+  @OneToMany(() => Cart, (cart) => cart.productItem)
   cart?: Cart[];
 }

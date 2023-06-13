@@ -13,8 +13,13 @@ export class CartsService {
 
   async createCart(cart, userId: number) {
     cart.userId = userId;
+    const id = cart.productItem;
     console.log(cart);
-    return await this.cartRepository.save(cart);
+    return await this.cartRepository.save({
+      userId: cart.userId,
+      quantity: cart.quantity,
+      productItem: { id },
+    });
   }
 
   async updateCart(cart: InputCartDto, userId: number) {
