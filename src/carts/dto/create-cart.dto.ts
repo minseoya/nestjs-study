@@ -1,10 +1,6 @@
 import { IsNumber, IsOptional } from 'class-validator';
 
 export class InputCartDto {
-  @IsOptional()
-  @IsNumber()
-  userId: number;
-
   @IsNumber()
   readonly productItem: number;
 
