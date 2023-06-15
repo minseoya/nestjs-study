@@ -1,9 +1,19 @@
-import { Body, Controller, HttpCode, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { CartsService } from './carts.service';
 import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Cart } from './entities/cart.entity';
-import { CreateCartDto } from './dto/create-cart.dto';
+import { InputCartDto } from './dto/create-cart.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { RequestUser } from 'src/interface/req.interface';
 
 @ApiTags('cart API')
 @Controller('carts')
@@ -18,12 +28,37 @@ export class CartsController {
   })
   @ApiCreatedResponse({ description: 'cart를 생성하지', type: Cart })
   @HttpCode(201)
-  cart(@Body() cart: CreateCartDto) {
-    return this.cartsService.createCart(cart);
+  async cart(@Body() cart: InputCartDto, @Req() req: RequestUser) {
+    const userId = req.user.id;
+    const product = await this.cartsService.existCartItem(cart, userId);
+    if (!product) return await this.cartsService.createCart(cart, userId);
+    return await this.cartsService.updateCart(
+      product,
+      cart.quantity + product.quantity,
+    );
   }
 
+  @UseGuards(AuthGuard)
+  @Get()
+  async getCartList(@Req() req: RequestUser) {
+    return await this.cartsService.getCartList(req.user.id);
+  }
+
+  @UseGuards(AuthGuard)
   @Post('update')
-  async updatecart(@Body() cart: CreateCartDto) {
-    return await this.cartsService.updateCart(cart);
+  async updatecart(@Body() cart: InputCartDto, @Req() req: RequestUser) {
+    const userId = req.user.id;
+    const product = await this.cartsService.existCartItem(cart, userId);
+
+    return await this.cartsService.updateCart(product, cart.quantity);
+  }
+
+  @UseGuards(AuthGuard)
+  @Delete('delete')
+  async deleteCartItem(@Body() cart: InputCartDto, @Req() req: RequestUser) {
+    const userId = req.user.id;
+    const product = await this.cartsService.existCartItem(cart, userId);
+
+    return this.cartsService.deleteCartItem(product);
   }
 }

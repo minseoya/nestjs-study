@@ -11,6 +11,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { CreateUserDto } from './dto/user.dto';
 import { userLoginDto } from './dto/user.dto';
 import {
   ApiCreatedResponse,
@@ -18,7 +19,6 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import { CreateUserDto } from './dto/create-user.dto';
 import { Users } from 'src/users/entities/user. entity';
 import { AuthGuard } from 'src/auth/auth.guard';
 

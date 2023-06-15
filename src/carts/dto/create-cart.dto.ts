@@ -1,12 +1,17 @@
-import { IsNumber } from 'class-validator';
+import { IsNumber, IsOptional } from 'class-validator';
 
-export class CreateCartDto {
+export class InputCartDto {
   @IsNumber()
-  readonly userId: number;
-
-  @IsNumber()
-  readonly productItems: number;
+  readonly productItem: number;
 
   @IsNumber()
   readonly quantity: number;
+}
+
+export class UpdateCartDto {
+  @IsNumber()
+  id: number;
+
+  @IsNumber()
+  quantity: number;
 }

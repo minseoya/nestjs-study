@@ -24,7 +24,7 @@ export class Users {
   @Column({ name: 'phone_number' })
   phoneNumber: string;
 
-  @OneToMany(() => Cart, (cart) => cart.user)
+  @OneToMany(() => Cart, (cart) => cart.userId)
   @JoinTable()
   cart: Cart;
 }
