@@ -8,13 +8,10 @@ export class InputCartDto {
   readonly quantity: number;
 }
 
-export class CreateCartDto {
+export class UpdateCartDto {
   @IsNumber()
-  userId: number;
+  id: number;
 
   @IsNumber()
-  readonly productItems: number;
-
-  @IsNumber()
-  readonly quantity: number;
+  quantity: number;
 }

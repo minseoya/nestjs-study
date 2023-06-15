@@ -1,6 +1,8 @@
 import {
   Body,
   Controller,
+  Delete,
+  Get,
   HttpCode,
   Post,
   Req,
@@ -26,15 +28,37 @@ export class CartsController {
   })
   @ApiCreatedResponse({ description: 'cart를 생성하지', type: Cart })
   @HttpCode(201)
-  cart(@Body() cart: InputCartDto, @Req() req: RequestUser) {
+  async cart(@Body() cart: InputCartDto, @Req() req: RequestUser) {
     const userId = req.user.id;
-
-    return this.cartsService.createCart(cart, userId);
+    const product = await this.cartsService.existCartItem(cart, userId);
+    if (!product) return await this.cartsService.createCart(cart, userId);
+    return await this.cartsService.updateCart(
+      product,
+      cart.quantity + product.quantity,
+    );
   }
 
+  @UseGuards(AuthGuard)
+  @Get()
+  async getCartList(@Req() req: RequestUser) {
+    return await this.cartsService.getCartList(req.user.id);
+  }
+
+  @UseGuards(AuthGuard)
   @Post('update')
   async updatecart(@Body() cart: InputCartDto, @Req() req: RequestUser) {
     const userId = req.user.id;
-    return await this.cartsService.updateCart(cart, userId);
+    const product = await this.cartsService.existCartItem(cart, userId);
+
+    return await this.cartsService.updateCart(product, cart.quantity);
+  }
+
+  @UseGuards(AuthGuard)
+  @Delete('delete')
+  async deleteCartItem(@Body() cart: InputCartDto, @Req() req: RequestUser) {
+    const userId = req.user.id;
+    const product = await this.cartsService.existCartItem(cart, userId);
+
+    return this.cartsService.deleteCartItem(product);
   }
 }

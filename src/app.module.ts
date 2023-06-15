@@ -10,6 +10,7 @@ import { Product } from './entities/product.entity';
 import { ConfigModule } from '@nestjs/config';
 import authConfig from './config/authConfig';
 import { AuthModule } from './auth/auth.module';
+import { ProductImage } from './entities/productImage.entity';
 
 @Module({
   imports: [
@@ -19,14 +20,14 @@ import { AuthModule } from './auth/auth.module';
       port: 3306,
       username: 'root',
       password: '000618',
-      database: 'unicon',
+      database: 'uniconNest',
       // host: process.env.DB_HOST,
       // port: +process.env.DB_PORT,
       // username: process.env.DB_USERNAME,
       // password: process.env.DB_PASSWORD,
       // database: process.env.DB_DATABASE,
-      entities: [Users, Cart, Product],
-      synchronize: false,
+      entities: [Users, Cart, Product, ProductImage],
+      synchronize: true,
       // logging: true,
     }),
 
