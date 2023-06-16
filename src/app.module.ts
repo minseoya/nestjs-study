@@ -12,6 +12,7 @@ import authConfig from './config/authConfig';
 import { AuthModule } from './auth/auth.module';
 import { ProductImage } from './entities/productImage.entity';
 import { OrderService } from './order/order.service';
+import { Order } from './order/entities/order.entity';
 
 @Module({
   imports: [
