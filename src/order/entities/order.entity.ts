@@ -6,9 +6,12 @@ import {
   Column,
   Entity,
   JoinColumn,
+  JoinTable,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { OrderItem } from './orderItem.entity';
 
 @Entity('orders')
 export class Order {
@@ -30,6 +33,10 @@ export class Order {
   @ManyToOne(() => Users, (user) => user.order)
   @JoinColumn({ name: 'user_id' })
   userId: Users;
+
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.orderId)
+  @JoinTable()
+  orderItem: OrderItem;
 
   @BeforeInsert()
   generateOrderNumber() {

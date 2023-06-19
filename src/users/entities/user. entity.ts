@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { Cart } from '../../carts/entities/cart.entity';
 import { Order } from 'src/order/entities/order.entity';
+import { OrderItem } from 'src/order/entities/orderItem.entity';
 
 @Entity('users')
 export class Users {
@@ -32,4 +33,8 @@ export class Users {
   @OneToMany(() => Order, (order) => order.userId)
   @JoinTable()
   order: Order;
+
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.userId)
+  @JoinTable()
+  orderItem: OrderItem;
 }

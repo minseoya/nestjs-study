@@ -11,8 +11,9 @@ import { ConfigModule } from '@nestjs/config';
 import authConfig from './config/authConfig';
 import { AuthModule } from './auth/auth.module';
 import { ProductImage } from './entities/productImage.entity';
-import { OrderService } from './order/order.service';
 import { Order } from './order/entities/order.entity';
+import { OrderModule } from './order/order.module';
+import { OrderItem } from './order/entities/orderItem.entity';
 
 @Module({
   imports: [
@@ -28,11 +29,10 @@ import { Order } from './order/entities/order.entity';
       // username: process.env.DB_USERNAME,
       // password: process.env.DB_PASSWORD,
       // database: process.env.DB_DATABASE,
-      entities: [Users, Cart, Product, ProductImage, Order],
+      entities: [Users, Cart, Product, ProductImage, Order, OrderItem],
       synchronize: true,
       // logging: true,
     }),
-
     UsersModule,
     CartsModule,
     AuthModule,
@@ -41,8 +41,9 @@ import { Order } from './order/entities/order.entity';
       load: [authConfig],
       isGlobal: true,
     }),
+    OrderModule,
   ],
   controllers: [AppController],
-  providers: [AppService, OrderService],
+  providers: [AppService],
 })
 export class AppModule {}
