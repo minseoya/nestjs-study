@@ -11,21 +11,28 @@ import { ConfigModule } from '@nestjs/config';
 import authConfig from './config/authConfig';
 import { AuthModule } from './auth/auth.module';
 import { ProductImage } from './entities/productImage.entity';
+import { Order } from './order/entities/order.entity';
+import { OrderModule } from './order/order.module';
+import { OrderItem } from './order/entities/orderItem.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: process.env.DB_HOST,
-      port: +process.env.DB_PORT,
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
-      entities: [Users, Cart, Product, ProductImage],
+      host: '127.0.0.1',
+      port: 3306,
+      username: 'root',
+      password: '000618',
+      database: 'uniconNest',
+      // host: process.env.DB_HOST,
+      // port: +process.env.DB_PORT,
+      // username: process.env.DB_USERNAME,
+      // password: process.env.DB_PASSWORD,
+      // database: process.env.DB_DATABASE,
+      entities: [Users, Cart, Product, ProductImage, Order, OrderItem],
       synchronize: true,
       // logging: true,
     }),
-
     UsersModule,
     CartsModule,
     AuthModule,
@@ -34,6 +41,7 @@ import { ProductImage } from './entities/productImage.entity';
       load: [authConfig],
       isGlobal: true,
     }),
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [AppService],

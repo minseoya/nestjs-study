@@ -1,6 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Cart } from '../carts/entities/cart.entity';
 import { ProductImage } from './productImage.entity';
+import { OrderItem } from 'src/order/entities/orderItem.entity';
 
 @Entity('product')
 export class Product {
@@ -27,4 +28,7 @@ export class Product {
 
   @OneToMany(() => ProductImage, (productImage) => productImage.productId)
   productImage?: ProductImage[];
+
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.productId)
+  orderItem?: OrderItem[];
 }

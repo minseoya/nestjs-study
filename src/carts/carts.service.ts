@@ -40,8 +40,8 @@ export class CartsService {
     });
   }
 
-  async getCartList(userId: number) {
-    return await this.cartRepository
+  async getCartList(userId: number): Promise<CartItem[]> {
+    const cartList = await this.cartRepository
       .createQueryBuilder('cart')
       .select([
         'cart.id',
@@ -65,5 +65,6 @@ export class CartsService {
       )
       .where('cart.user_id = :userId', { userId })
       .getRawAndEntities();
+    return cartList.raw;
   }
 }

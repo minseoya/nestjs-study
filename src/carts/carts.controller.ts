@@ -40,7 +40,7 @@ export class CartsController {
 
   @UseGuards(AuthGuard)
   @Get()
-  async getCartList(@Req() req: RequestUser) {
+  async getCartList(@Req() req: RequestUser): Promise<CartItem[] | null> {
     return await this.cartsService.getCartList(req.user.id);
   }
 
