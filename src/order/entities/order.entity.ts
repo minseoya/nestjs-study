@@ -9,9 +9,11 @@ import {
   JoinTable,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { OrderItem } from './orderItem.entity';
+import { Receipt } from 'src/payment/entities/payment.entity';
 
 @Entity('orders')
 export class Order {
@@ -37,6 +39,10 @@ export class Order {
   @OneToMany(() => OrderItem, (orderItem) => orderItem.orderId)
   @JoinTable()
   orderItem: OrderItem;
+
+  @OneToOne(() => Receipt, (recepit) => recepit.orderId)
+  @JoinColumn()
+  recepit: Receipt;
 
   @BeforeInsert()
   generateOrderNumber() {
