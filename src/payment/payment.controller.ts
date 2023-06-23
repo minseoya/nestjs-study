@@ -1,4 +1,11 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  ParseUUIDPipe,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { RequestUser } from 'src/interface/req.interface';
@@ -10,7 +17,7 @@ export class PaymentController {
 
   @UseGuards(AuthGuard)
   @Post()
-  async createPayment(@Body() orderNumber: orderNumberDto) {
+  async createPayment(@Body(new ParseUUIDPipe()) orderNumber: orderNumberDto) {
     return await this.paymentService.createPayment(orderNumber.orderNumber);
   }
 }
