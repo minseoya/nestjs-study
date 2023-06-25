@@ -14,17 +14,23 @@ import { ProductImage } from './entities/productImage.entity';
 import { Order } from './order/entities/order.entity';
 import { OrderModule } from './order/order.module';
 import { OrderItem } from './order/entities/orderItem.entity';
+import { PaymentModule } from './payment/payment.module';
+import { Receipt } from './payment/entities/payment.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
+
+      type: 'mysql',
 
       host: process.env.DB_HOST,
       port: +process.env.DB_PORT,
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [Users, Cart, Product, ProductImage, Order, OrderItem],
+
+      entities: [Users, Cart, Product, ProductImage, Order, OrderItem, Receipt],
+
       synchronize: true,
       // logging: true,
     }),
@@ -37,6 +43,7 @@ import { OrderItem } from './order/entities/orderItem.entity';
       isGlobal: true,
     }),
     OrderModule,
+    PaymentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -4,10 +4,12 @@ import {
   Controller,
   Get,
   Param,
+  ParseIntPipe,
   Post,
   Req,
   UseGuards,
   UseInterceptors,
+  UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
@@ -28,6 +30,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
+  @UsePipes(ValidationPipe)
   @ApiOperation({ summary: '유저 생성 API', description: '유저를 생성한다.' })
   @ApiCreatedResponse({ description: '유저를 생성하지', type: Users })
   @UseInterceptors(ClassSerializerInterceptor)
@@ -43,7 +46,7 @@ export class UsersController {
     required: true,
     description: '유저의 정보를 찾고싶을때 사용',
   })
-  findUserInfo(@Param('userid') userId: number): Promise<Users> {
+  findUserInfo(@Param('userid', ParseIntPipe) userId: number): Promise<Users> {
     return this.usersService.findUserInfo(userId);
   }
 

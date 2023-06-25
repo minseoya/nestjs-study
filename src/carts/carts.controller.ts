@@ -7,6 +7,7 @@ import {
   Post,
   Req,
   UseGuards,
+  ValidationPipe,
 } from '@nestjs/common';
 import { CartsService } from './carts.service';
 import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -28,7 +29,10 @@ export class CartsController {
   })
   @ApiCreatedResponse({ description: 'cart를 생성하지', type: Cart })
   @HttpCode(201)
-  async cart(@Body() cart: InputCartDto, @Req() req: RequestUser) {
+  async cart(
+    @Body(ValidationPipe) cart: InputCartDto,
+    @Req() req: RequestUser,
+  ): Promise<any> {
     const userId = req.user.id;
     const product = await this.cartsService.existCartItem(cart, userId);
     if (!product) return await this.cartsService.createCart(cart, userId);
@@ -46,7 +50,10 @@ export class CartsController {
 
   @UseGuards(AuthGuard)
   @Post('update')
-  async updatecart(@Body() cart: InputCartDto, @Req() req: RequestUser) {
+  async updatecart(
+    @Body(ValidationPipe) cart: InputCartDto,
+    @Req() req: RequestUser,
+  ) {
     const userId = req.user.id;
     const product = await this.cartsService.existCartItem(cart, userId);
 

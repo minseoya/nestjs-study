@@ -13,7 +13,7 @@ export class OrderController {
 
   @UseGuards(AuthGuard)
   @Post()
-  async createOrder(@Req() req: RequestUser) {
+  async createOrder(@Req() req: RequestUser): Promise<{ orderNumber: string }> {
     const userId = req.user.id;
     const cartItems = await this.cartService.getCartList(userId);
     return await this.orderService.createOrder(userId, cartItems);

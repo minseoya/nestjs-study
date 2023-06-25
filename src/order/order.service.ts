@@ -12,17 +12,14 @@ import { OrderItem } from './entities/orderItem.entity';
 export class OrderService {
   constructor(
     @InjectEntityManager() private entityManager: EntityManager,
-    @InjectRepository(Order)
-    private orderRepository: Repository<Order>,
-    @InjectRepository(Cart)
-    private cartRepository: Repository<Cart>,
-    @InjectRepository(Users)
-    private usersRepository: Repository<Users>,
     @InjectRepository(OrderItem)
     private orderItemRepository: Repository<OrderItem>,
   ) {}
 
-  async createOrder(userId: number, cartItems: CartItem[]): Promise<any> {
+  async createOrder(
+    userId: number,
+    cartItems: CartItem[],
+  ): Promise<{ orderNumber: string }> {
     const totalAmount = cartItems.reduce(
       (accumulator: number, currentValue: CartItem) =>
         currentValue.cart_quantity * parseInt(currentValue.product_price) +
@@ -37,7 +34,7 @@ export class OrderService {
 
     const result = await this.entityManager.transaction(
       async (entityManager) => {
-        order = await this.orderRepository.save({
+        order = await this.entityManager.save(Order, {
           totalAmount,
           userId: { id: userId },
           orderStatusId,
@@ -53,12 +50,12 @@ export class OrderService {
             quantity: item.cart_quantity,
             orderId: { id: orderId },
           });
-          await this.cartRepository.delete({
+          await this.entityManager.delete(Cart, {
             productItem: { id: item.product_id },
           });
         }
       },
     );
-    return result;
+    return { orderNumber };
   }
 }
