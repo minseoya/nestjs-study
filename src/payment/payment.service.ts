@@ -27,7 +27,8 @@ export class PaymentService {
       .where('order_number = :orderNumber', { orderNumber })
       .getRawOne();
     const orderStatusId: number = OrderStatusValues['COMPLETED_PAYMENT'];
-
+    let points: number;
+    let getProductName: string[];
     const result = await this.entityManager.transaction(
       async (entityManager) => {
         await this.entityManager
@@ -42,9 +43,9 @@ export class PaymentService {
           where: { id: orderInfo.userId },
         });
 
-        user.points;
+        points = user.points;
 
-        const getProductName = await entityManager
+        getProductName = await entityManager
           .createQueryBuilder()
           .select('p.names')
           .from(Product, 'p')
@@ -101,5 +102,10 @@ export class PaymentService {
           .execute();
       },
     );
+    return {
+      totalAmout: orderInfo.totalAmount,
+      updatePoint: points,
+      productName: getProductName,
+    };
   }
 }
