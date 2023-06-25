@@ -17,7 +17,7 @@ export class PaymentController {
 
   @UseGuards(AuthGuard)
   @Post()
-  async createPayment(@Body(new ParseUUIDPipe()) orderNumber: orderNumberDto) {
+  async createPayment(@Body() orderNumber: orderNumberDto) {
     return await this.paymentService.createPayment(orderNumber.orderNumber);
   }
 }
