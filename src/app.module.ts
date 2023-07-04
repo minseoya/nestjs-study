@@ -20,7 +20,6 @@ import { Receipt } from './payment/entities/payment.entity';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-
       type: 'mysql',
 
       host: process.env.DB_HOST,
@@ -28,9 +27,7 @@ import { Receipt } from './payment/entities/payment.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-
       entities: [Users, Cart, Product, ProductImage, Order, OrderItem, Receipt],
-
       synchronize: true,
       // logging: true,
     }),
