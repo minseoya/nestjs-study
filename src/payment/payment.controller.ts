@@ -8,7 +8,6 @@ import {
 } from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { RequestUser } from 'src/interface/req.interface';
 import { orderNumberDto } from './dto/payment.dto';
 
 @Controller('payment')

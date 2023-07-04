@@ -29,7 +29,7 @@ export class CartsService {
     return product;
   }
 
-  async updateCart(product: UpdateCartDto, quantity: number) {
+  async updateCart(product: UpdateCartDto, quantity: number): Promise<any> {
     product.quantity = quantity;
     return await this.cartRepository.save(product);
   }
